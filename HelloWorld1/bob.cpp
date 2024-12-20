@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 #include <math.h>
+#include <cstdlib> //for rand 
+#include <ctime> // to get time elapsed since jan 1970
 
 #define M_PI 3.14159265358979323846;
 
@@ -113,7 +115,7 @@ int main()
                      double temperature_fahrenheit;
                      cin >> temperature_fahrenheit;
                      double temperature_celsius = (temperature_fahrenheit - 32) / 1.8;
-                     cout << temperature_celsius << "degrees C";
+                     cout << temperature_celsius << "degrees C" << "\n";
 
         // more maths practice - circle calculator
 
@@ -122,7 +124,7 @@ int main()
                      double radius;
                      cin >> radius;
                      double area = pi * pow(radius, 2);\
-                     cout << area;
+                     cout << area << "\n";
 
 
         // data types and initialising variables
@@ -147,8 +149,31 @@ int main()
                      int binary = 0b11111111;
                      int hexadecimal = 0xFF;
 
+        // narrowing
+                     int pre_narrowing = 1'000'000;
+                     short post_narrowing = pre_narrowing;
 
+                     cout << post_narrowing << "\n";
+
+                     //prints 16960 rather than 1,000,000, can also use {} to prevent code from compiling with narrowed variable
+                     //going from short to int will not change variable value however
+
+        // generating random numbers
+
+                    
+                     srand(time(nullptr)); // alters the random number, by a fixed amount each time program runs
+                     int random = rand() % 10; // will create a random number, but that number will be the same every time the program runs
+                     // modulus will give remainder of division by 10, i.e. only 0-9, limiting the size of random number
+                     cout << random << "\n";
+
+                     const short min_value = 1;
+                     const short max_value = 6;
+
+                     short die_1 = (rand() % (max_value - min_value + 1)) + min_value;
+                     short die_2 = (rand() % (max_value - min_value + 1)) + min_value;
+                     cout << die_1 << ", " << die_2;
     return 0;
 
  
 }
+
