@@ -1,5 +1,9 @@
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <math.h>
+
+#define M_PI 3.14159265358979323846;
 
 using namespace std;
 
@@ -100,9 +104,25 @@ int main()
                      cout << "Enter second number: ";
                      cin >> num2;
 
-                     cout << "result: " << num1 + num2;
+                     cout << "result: " << num1 + num2 << "\n";
 
-    
+            //converting farenheit to celsius using cin
+
+                     cout << "Enter temperature (degrees F): ";
+
+                     double temperature_fahrenheit;
+                     cin >> temperature_fahrenheit;
+                     double temperature_celsius = (temperature_fahrenheit - 32) / 1.8;
+                     cout << temperature_celsius << "degrees C";
+
+        // more maths practice - circle calculator
+
+                     const double pi = M_PI;
+                     cout << "Enter the radius of a Circle: ";
+                     double radius;
+                     cin >> radius;
+                     double area = pi * pow(radius, 2);\
+                     cout << area;
     return 0;
 
  
