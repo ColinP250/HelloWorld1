@@ -88,16 +88,19 @@ int main()
 
     // reading from the console
                  cout << "Enter a value: ";
-                 int value;
-                 cin >> value;
-                 cout << value;
+                     int value;
+                     cin >> value;
+                     cout << value << endl;
 
-                 cout << "Enter values for E and F: ";
-                     double E;
-                     double F;
-                     cin >> E;
-                     cin >> F;
-                     cout << E + F;
+
+               double num1, num2;
+                 cout << "Enter first number: ";
+                     cin >> num1;
+
+                     cout << "Enter second number: ";
+                     cin >> num2;
+
+                     cout << "result: " << num1 + num2;
 
     
     return 0;
