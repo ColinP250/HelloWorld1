@@ -123,6 +123,31 @@ int main()
                      cin >> radius;
                      double area = pi * pow(radius, 2);\
                      cout << area;
+
+
+        // data types and initialising variables
+
+                     double price = 9.99;
+                     float interest_rate = 3.67f; //must have an f following a float or else the compiler will treat this like a double
+                     long file_size = 900000L; //same as float, but needs an L so the compiler can tell between int, double, and long
+                     char letter = 'a'; // needs single quotes around it, unlike a string which is double quotes
+                     bool is_valid = true;
+                     auto distance = 53.2; // auto will guess which variable type to use, which is why it is important to use F, L, single quotes etc;
+                     
+                     // int number = {1.2};  {} will prevent code from compiling if wrong data is stored, without this it would just output 1 and lose the .2
+                     // can also use empty {} to initialise variable to 0;
+
+            // numbers
+                     //decimal (base) 10 = digits 0-9
+                     //binary (base 2) = digits 0,1
+                     //hexidecimal (base 16) = digits 0-9, letters A-F
+                        //hexidecimal can represent any colour using just 6 digits
+
+                     int decimal = 255;
+                     int binary = 0b11111111;
+                     int hexadecimal = 0xFF;
+
+
     return 0;
 
  
