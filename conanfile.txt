@@ -1,7 +1,6 @@
 [requires]
 boost/1.86.0
 [generators]
-CMakeDeps
-CMakeToolchain
+MSBuildDeps
 [layout]
-cmake_layout
+vs_layout
