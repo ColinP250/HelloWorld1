@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdlib> //for rand 
 #include <ctime> // to get time elapsed since jan 1970
+#include <random>
 
 #include <boost/program_options.hpp>
 
@@ -24,11 +25,11 @@ int iFileSize{}; // Hungarian Notation -- not relevant anymore, i for int
 void circlecalculator()
 {
 	const double pi = 3.14159265359;
-	cout << "Enter the radius of a Circle: ";
+	std::cout << "Enter the radius of a Circle: ";
 	double radius;
-	cin >> radius;
+	std::cin >> radius;
 	double area = pi * pow(radius, 2);
-	cout << area << "\n";
+	std::cout << "the area of the circle is: " << area << " units^2" << "\n";
 }
 
 void diceroll()
@@ -36,16 +37,19 @@ void diceroll()
 	const short min_value = 1;
 	const short max_value = 6;
 
-	short die_1 = (rand() % (max_value - min_value + 1)) + min_value;
-	short die_2 = (rand() % (max_value - min_value + 1)) + min_value;
-	cout << die_1 << ", " << die_2;
+	std::random_device generator;
+	std::uniform_int_distribution<int> distribution(1, 6);
+	int die_1 = distribution(generator);  // generates number in the range 1..6 
+	int die_2 = distribution(generator);  // generates number in the range 1..6 
+
+	std::cout << die_1 << ", " << die_2;
 }
 
 void taxcalculator()
 {
-	cout << "insert annual sales :";
+	std::cout << "insert annual sales :";
 	double sales{};
-	cin >> sales;
+	std::cin >> sales;
 	const double state_tax_rate = 0.04;
 	const double county_tax_rate = 0.02;
 
@@ -56,46 +60,86 @@ void taxcalculator()
 
 	double net_sales = sales - total_tax;
 
-	cout << "total sales = $" << sales << "\n";
-	cout << "state tax = $" << state_tax << "\n";
-	cout << "county tax = $" << county_tax << "\n";
-	cout << "total tax = $" << total_tax << "\n";
-	cout << "net sales = $" << net_sales << "\n";
+	std::cout << "total sales = $" << sales << "\n";
+	std::cout << "state tax = $" << state_tax << "\n";
+	std::cout << "county tax = $" << county_tax << "\n";
+	std::cout << "total tax = $" << total_tax << "\n";
+	std::cout << "net sales = $" << net_sales << "\n";
 }
 
 void temperatureconverter()
 {
-	cout << "Enter temperature (degrees F): ";
+	std::cout << "Enter temperature (degrees F): ";
 
 	double temperature_fahrenheit;
-	cin >> temperature_fahrenheit;
+	std::cin >> temperature_fahrenheit;
 	double temperature_celsius = (temperature_fahrenheit - 32) / 1.8;
-	cout << temperature_celsius << "degrees C" << "\n";
+	std::cout << temperature_celsius << "degrees C" << "\n";
 }
 
 void helloworld()
 	{
-	cout << sayHello() << "\n" << "Hello again!" << "\n";
+	std::cout << sayHello() << "\n" << "Hello again!" << "\n";
 	}
 
 
 void additioncaclulator()
 {
 	double num1, num2;
-	cout << "Enter first number: ";
-	cin >> num1;
+	std::cout << "Enter first number: ";
+	std::cin >> num1;
 
-	cout << "Enter second number: ";
-	cin >> num2;
+	std::cout << "Enter second number: ";
+	std::cin >> num2;
 
-	cout << "result: " << num1 + num2 << "\n";
+	std::cout << "result: " << num1 + num2 << "\n";
 }
 
-int main()
+int main(int argc, char** argv)
 {
 	
+	// options selector
+	po::options_description desc("Available options");
+	desc.add_options()
+		("help", "produce help message")
+		("circlecalculator", "calculates the area of a circle from its radius")
+		("diceroll", "outputs the results of a roll of pair of dice")
+		("taxcalculator", "calculates the state and county tax on annual sales")
+		("temperatureconvertor", "converts temperatures from fahrenheit to celcius")
+		("helloworld", "prints hello world")
+		("additioncalculator", "calculates the sum of two doubles");
 
+	po::variables_map vm;
+	po::store(po::parse_command_line(argc, argv, desc), vm);
+	po::notify(vm);
 
+	if (vm.count("circlecalculator")){
+		circlecalculator();
+	}
+
+	if (vm.count("diceroll")) {
+		diceroll();
+	}
+
+	if (vm.count("taxcalculator")) {
+		taxcalculator();
+	}
+
+	if (vm.count("temperatureconvertor")) {
+		temperatureconverter();
+	}
+
+	if (vm.count("helloworld")) {
+		helloworld();
+	}
+
+	if (vm.count("additioncalculator")) {
+		additioncaclulator();
+	}
+
+	if (vm.count("help")) {
+		std::cout << desc << "/n";
+	}
 	int x = 1;
 	int y = 7;
 
@@ -142,21 +186,6 @@ int main()
 	double g = (e + 10) / (3 * f);
 
 	// want to print g = 1.3333
-
-
-
-	
-
-	
-
-	// reading from the console
-
-
-
-	//converting farenheit to celsius using cin
-
-	
-
 
 	
 
