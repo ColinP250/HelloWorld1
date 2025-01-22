@@ -4,14 +4,15 @@
 #include <cstdlib> //for rand 
 #include <ctime> // to get time elapsed since jan 1970
 #include <random>
+#include <vector>
+#include <numeric>
 
 #include <boost/program_options.hpp>
-
-using namespace std;
+;
 
 namespace po = boost::program_options;
 
-string sayHello()
+std::string sayHello()
 {
 	return "Hello, bob!";
 }
@@ -26,7 +27,7 @@ void circlecalculator()
 {
 	const double pi = 3.14159265359;
 	std::cout << "Enter the radius of a Circle: ";
-	double radius;
+	double radius{};
 	std::cin >> radius;
 	double area = pi * pow(radius, 2);
 	std::cout << "the area of the circle is: " << area << " units^2" << "\n";
@@ -34,15 +35,51 @@ void circlecalculator()
 
 void diceroll()
 {
-	const short min_value = 1;
-	const short max_value = 6;
+	std::string dicerollagain{};
+	do {
+		
+		std::random_device generator;
+		std::uniform_int_distribution<int> distribution(1, 6);
+		int die_1 = distribution(generator);  // generates number in the range 1..6 
+		int die_2 = distribution(generator);  // generates number in the range 1..6 
 
-	std::random_device generator;
-	std::uniform_int_distribution<int> distribution(1, 6);
-	int die_1 = distribution(generator);  // generates number in the range 1..6 
-	int die_2 = distribution(generator);  // generates number in the range 1..6 
+		std::cout << die_1 << ", " << die_2 << "\n";
+		std::cout << "Roll Again?" << "\n" << "Please enter 'yes' or 'no'" << "\n";
+		std::string dicerollagain{};
+		std::cin >> dicerollagain;
+		}
+	while (dicerollagain == "yes");
 
-	std::cout << die_1 << ", " << die_2;
+}
+
+void customdiceroll()
+{
+	int diefaces{};
+	int NumberOfDice{};
+	int howmanydicerolled(0);
+
+	std::cout << "Enter the amount of faces you want per die" << "\n";
+	std::cin >> diefaces;
+	std::cout << "you have chosen " << diefaces << " faces" << "\n" << "Enter the amount of dice you wish to roll" << "\n";
+	std::cin >> NumberOfDice;
+	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
+
+	std::vector<double> DiceRollResults;
+	std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
+	do {
+		std::random_device CustomGenerator;
+		std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
+		int DiceRoll = CustomDistribution(CustomGenerator);
+		std::cout << DiceRoll << "\n";
+		DiceRollResults.push_back(static_cast<double>(DiceRoll));
+		howmanydicerolled++;
+	} 
+	while (howmanydicerolled < NumberOfDice);
+
+	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
+	double DiceAverage = DiceSum / DiceRollResults.size();
+	std::cout << "\n" << "***Insights***" << "\n" << "average roll = " << DiceAverage << "\n" << "total rolled = " << DiceSum;
+
 }
 
 void taxcalculator()
@@ -85,7 +122,7 @@ void helloworld()
 
 void additioncaclulator()
 {
-	double num1, num2;
+	double num1{}, num2{};
 	std::cout << "Enter first number: ";
 	std::cin >> num1;
 
@@ -102,16 +139,23 @@ int main(int argc, char** argv)
 	po::options_description desc("Available options");
 	desc.add_options()
 		("help", "produce help message")
-		("circlecalculator", "calculates the area of a circle from its radius")
+		("calculators", "offers a set of calculators for a variety of uses")
 		("diceroll", "outputs the results of a roll of pair of dice")
-		("taxcalculator", "calculates the state and county tax on annual sales")
+		("customdiceroll", "outputs the result of a customised roll of dice")
 		("temperatureconvertor", "converts temperatures from fahrenheit to celcius")
-		("helloworld", "prints hello world")
-		("additioncalculator", "calculates the sum of two doubles");
+		("helloworld", "prints hello world");
 
 	po::variables_map vm;
 	po::store(po::parse_command_line(argc, argv, desc), vm);
 	po::notify(vm);
+
+	if (vm.count("calculators")) {
+		po::options_description calculators_desc("avaliable calculators");
+		calculators_desc.add_options()
+			("circlecalculator", "calculates the area of a circle from its radius")
+			("taxcalculator", "calculates the state and county tax on annual sales")
+			("additioncalculator", "calculates the sum of two doubles");
+	}
 
 	if (vm.count("circlecalculator")){
 		circlecalculator();
@@ -119,6 +163,10 @@ int main(int argc, char** argv)
 
 	if (vm.count("diceroll")) {
 		diceroll();
+	}
+
+	if (vm.count("customdiceroll")){
+		customdiceroll();
 	}
 
 	if (vm.count("taxcalculator")) {
@@ -150,7 +198,7 @@ int main(int argc, char** argv)
 	int B = 3;
 
 	// How to swap the two variables???
-	swap(x, y);
+	std::swap(x, y);
 
 	// mathematical expressions
 
