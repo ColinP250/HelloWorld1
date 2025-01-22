@@ -60,25 +60,39 @@ void customdiceroll()
 
 	std::cout << "Enter the amount of faces you want per die" << "\n";
 	std::cin >> diefaces;
-	std::cout << "you have chosen " << diefaces << " faces" << "\n" << "Enter the amount of dice you wish to roll" << "\n";
-	std::cin >> NumberOfDice;
-	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
+	if (diefaces == 0) {
+		std::cout << "You Cannot Enter 0";
+	}
+	else{
+		std::cout << "you have chosen " << diefaces << " faces" << "\n" << "Enter the amount of dice you wish to roll" << "\n";
+		std::cin >> NumberOfDice;
+		if (NumberOfDice == 0) {
+			std::cout << "You Cannot Enter 0";
+		}
+		else {
+std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
 
-	std::vector<double> DiceRollResults;
-	std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
-	do {
-		std::random_device CustomGenerator;
-		std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
-		int DiceRoll = CustomDistribution(CustomGenerator);
-		std::cout << DiceRoll << "\n";
-		DiceRollResults.push_back(static_cast<double>(DiceRoll));
-		howmanydicerolled++;
-	} 
-	while (howmanydicerolled < NumberOfDice);
+	std::vector<int> DiceRollResults;
+		std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
+		do {
+			std::random_device CustomGenerator;
+			std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
+			int DiceRoll = CustomDistribution(CustomGenerator);
+			std::cout << DiceRoll << "\n";
+			DiceRollResults.push_back(static_cast<double>(DiceRoll));
+			howmanydicerolled++;
+		} 
+		while (howmanydicerolled < NumberOfDice);
 
-	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
-	double DiceAverage = DiceSum / DiceRollResults.size();
-	std::cout << "\n" << "***Insights***" << "\n" << "average roll = " << DiceAverage << "\n" << "total rolled = " << DiceSum;
+		double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
+		double DiceAverage = DiceSum / DiceRollResults.size();
+		std::cout << "\n" << "***Insights***" << "\n" << "average roll = " << DiceAverage << "\n" << "total rolled = " << DiceSum;
+		}
+		
+	}
+	
+
+	
 
 }
 
