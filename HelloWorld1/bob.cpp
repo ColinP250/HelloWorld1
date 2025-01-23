@@ -72,15 +72,15 @@ void customdiceroll()
 
 	std::vector<double> DiceRollResults;
 	std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
-	do {
+
+	for (int howmanydicerolled = 1; howmanydicerolled <= NumberOfDice; howmanydicerolled++) {
 		std::random_device CustomGenerator;
 		std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
 		int DiceRoll = CustomDistribution(CustomGenerator);
 		std::cout << DiceRoll << "\n";
 		DiceRollResults.push_back(static_cast<double>(DiceRoll));
-		howmanydicerolled++;
 	} 
-	while (howmanydicerolled < NumberOfDice);
+	
 
 	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
 	double DiceAverage = DiceSum / DiceRollResults.size();
