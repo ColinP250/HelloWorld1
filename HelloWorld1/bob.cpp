@@ -58,10 +58,16 @@ void customdiceroll()
 	int NumberOfDice{};
 	int howmanydicerolled(0);
 
-	std::cout << "Enter the amount of faces you want per die" << "\n";
-	std::cin >> diefaces;
-	std::cout << "you have chosen " << diefaces << " faces" << "\n" << "Enter the amount of dice you wish to roll" << "\n";
-	std::cin >> NumberOfDice;
+	while (diefaces <= 0) {
+		std::cout << "Enter the amount of faces you want per die" << "\n";
+		std::cin >> diefaces;
+	}
+	std::cout << "you have chosen " << diefaces << " faces" << "\n";
+
+	while (NumberOfDice <= 0) {
+		std::cout << "Enter the amount of dice you wish to roll" << "\n";
+		std::cin >> NumberOfDice;
+	}
 	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
 
 	std::vector<double> DiceRollResults;
