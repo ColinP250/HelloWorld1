@@ -7,6 +7,7 @@
 #include <vector>
 #include <numeric>
 
+
 #include <boost/program_options.hpp>
 ;
 
@@ -56,43 +57,39 @@ void customdiceroll()
 {
 	int diefaces{};
 	int NumberOfDice{};
-	int howmanydicerolled(0);
 
-	std::cout << "Enter the amount of faces you want per die" << "\n";
-	std::cin >> diefaces;
-	if (diefaces == 0) {
-		std::cout << "You Cannot Enter 0";
-	}
-	else{
-		std::cout << "you have chosen " << diefaces << " faces" << "\n" << "Enter the amount of dice you wish to roll" << "\n";
+	
+
+	while (diefaces <= 0) {
+		std::cout << "Enter the amount of faces you want per die" << "\n";
+		std::cin >> diefaces;
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+	} 
+	std::cout << "you have chosen " << diefaces << " faces" << "\n";
+
+	while (NumberOfDice <= 0) {
+		std::cout << "Enter the amount of dice you wish to roll" << "\n";
 		std::cin >> NumberOfDice;
-		if (NumberOfDice == 0) {
-			std::cout << "You Cannot Enter 0";
-		}
-		else {
-std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
-
-	std::vector<int> DiceRollResults;
-		std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
-		do {
-			std::random_device CustomGenerator;
-			std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
-			int DiceRoll = CustomDistribution(CustomGenerator);
-			std::cout << DiceRoll << "\n";
-			DiceRollResults.push_back(static_cast<double>(DiceRoll));
-			howmanydicerolled++;
-		} 
-		while (howmanydicerolled < NumberOfDice);
-
-		double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
-		double DiceAverage = DiceSum / DiceRollResults.size();
-		std::cout << "\n" << "***Insights***" << "\n" << "average roll = " << DiceAverage << "\n" << "total rolled = " << DiceSum;
-		}
-		
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
 	}
-	
+	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
 
-	
+	std::vector<double> DiceRollResults;
+	std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
+
+	for (int howmanydicerolled = 1; howmanydicerolled <= NumberOfDice; howmanydicerolled++) {
+		std::random_device CustomGenerator;
+		std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
+		int DiceRoll = CustomDistribution(CustomGenerator);
+		std::cout << DiceRoll << "\n";
+		DiceRollResults.push_back(static_cast<double>(DiceRoll));
+	} 
+
+	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
+	double DiceAverage = DiceSum / DiceRollResults.size();
+	std::cout << "\n" << "***Insights***" << "\n" << "average roll = " << DiceAverage << "\n" << "total rolled = " << DiceSum;
 
 }
 
