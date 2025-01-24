@@ -7,6 +7,7 @@
 #include <vector>
 #include <numeric>
 
+
 #include <boost/program_options.hpp>
 ;
 
@@ -56,17 +57,22 @@ void customdiceroll()
 {
 	int diefaces{};
 	int NumberOfDice{};
-	int howmanydicerolled(0);
+
+	
 
 	while (diefaces <= 0) {
 		std::cout << "Enter the amount of faces you want per die" << "\n";
 		std::cin >> diefaces;
-	}
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+	} 
 	std::cout << "you have chosen " << diefaces << " faces" << "\n";
 
 	while (NumberOfDice <= 0) {
 		std::cout << "Enter the amount of dice you wish to roll" << "\n";
 		std::cin >> NumberOfDice;
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
 	}
 	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
 
@@ -80,7 +86,6 @@ void customdiceroll()
 		std::cout << DiceRoll << "\n";
 		DiceRollResults.push_back(static_cast<double>(DiceRoll));
 	} 
-	
 
 	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
 	double DiceAverage = DiceSum / DiceRollResults.size();
