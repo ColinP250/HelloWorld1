@@ -58,8 +58,7 @@ void customdiceroll()
 	int diefaces{};
 	int NumberOfDice{};
 
-	
-
+	//While loop to check if any valid input has been recieved
 	while (diefaces <= 0) {
 		std::cout << "Enter the amount of faces you want per die" << "\n";
 		std::cin >> diefaces;
@@ -68,6 +67,7 @@ void customdiceroll()
 	} 
 	std::cout << "you have chosen " << diefaces << " faces" << "\n";
 
+	//While loop to check if any valid input has been recieved
 	while (NumberOfDice <= 0) {
 		std::cout << "Enter the amount of dice you wish to roll" << "\n";
 		std::cin >> NumberOfDice;
@@ -76,15 +76,16 @@ void customdiceroll()
 	}
 	std::cout << "you have chosen " << NumberOfDice << " dice" << "\n";
 
+	//initialise vector for storing each roll result
 	std::vector<double> DiceRollResults;
 	std::cout << "\n" << "***Roll Results***" << "\n" << "\n";
 
 	for (int howmanydicerolled = 1; howmanydicerolled <= NumberOfDice; howmanydicerolled++) {
 		std::random_device CustomGenerator;
 		std::uniform_int_distribution<int> CustomDistribution(1, diefaces);
-		int DiceRoll = CustomDistribution(CustomGenerator);
-		std::cout << DiceRoll << "\n";
-		DiceRollResults.push_back(static_cast<double>(DiceRoll));
+		int DiceRoll_temp = CustomDistribution(CustomGenerator);
+		std::cout << DiceRoll_temp << "\n";
+		DiceRollResults.push_back(static_cast<double>(DiceRoll_temp));
 	} 
 
 	double DiceSum = std::accumulate(DiceRollResults.begin(), DiceRollResults.end(), 0.0);
@@ -150,7 +151,9 @@ int main(int argc, char** argv)
 	po::options_description desc("Available options");
 	desc.add_options()
 		("help", "produce help message")
-		("calculators", "offers a set of calculators for a variety of uses")
+		("circlecalculator", "calculates the area of a circle from its radius")
+		("taxcalculator", "calculates the state and county tax on annual sales")
+		("additioncalculator", "calculates the sum of two doubles")
 		("diceroll", "outputs the results of a roll of pair of dice")
 		("customdiceroll", "outputs the result of a customised roll of dice")
 		("temperatureconvertor", "converts temperatures from fahrenheit to celcius")
@@ -159,14 +162,6 @@ int main(int argc, char** argv)
 	po::variables_map vm;
 	po::store(po::parse_command_line(argc, argv, desc), vm);
 	po::notify(vm);
-
-	if (vm.count("calculators")) {
-		po::options_description calculators_desc("avaliable calculators");
-		calculators_desc.add_options()
-			("circlecalculator", "calculates the area of a circle from its radius")
-			("taxcalculator", "calculates the state and county tax on annual sales")
-			("additioncalculator", "calculates the sum of two doubles");
-	}
 
 	if (vm.count("circlecalculator")){
 		circlecalculator();
@@ -199,6 +194,8 @@ int main(int argc, char** argv)
 	if (vm.count("help")) {
 		std::cout << desc << "/n";
 	}
+
+
 	int x = 1;
 	int y = 7;
 
